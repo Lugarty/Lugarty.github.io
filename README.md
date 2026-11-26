@@ -1,4 +1,3 @@
-# Personal website
 ## Website
 
 - [Brazilian Portuguese](https://lugarty.github.io/)
