@@ -47,102 +47,55 @@
     });
   }
 
-  const demo = document.querySelector(".demo");
+
+  const demo = document.querySelector(".mission-demo");
   if (!demo) return;
   const pt = document.documentElement.lang.toLowerCase().startsWith("pt");
-  const labels = pt ? {
-    ready: "Pronto", running: "Executando", approval: "Aguardando aprovação", complete: "Concluído",
-    idle: "Escolha uma tarefa e inicie a simulação.", permission: "Aguardando autorização do usuário (simulada).",
-    granted: "Autorização concedida na simulação.", done: "Simulação concluída. Nenhuma ação real foi executada."
+  const T = pt ? {
+    ready:"Pronto", working:"Executando", approval:"Revisão humana", complete:"Concluído", idle:"Inicie o cenário para acompanhar as ações.", review:"Controle entregue ao usuário. Confira o resultado antes de continuar.", approved:"Usuário confirmou a revisão. O agente retoma o fluxo.", finished:"Resultado conferido. Simulação concluída.", pending:"Não executado", saved:"Verificado", action:"Ação simulada", noChange:"Nenhuma alteração real.", browser:"Mensagens / exemplo", files:"Explorador / relatórios", desktop:"Estoque / cadastro", to:"Destinatário", message:"Mensagem", draft:"Rascunho", sent:"Mensagem enviada · simulada", empty:"Aguardando preenchimento", record:"Registro", stock:"Quantidade", newValue:"Nova quantidade", verified:"Resultado confirmado", example:"Ambiente fictício"
   } : {
-    ready: "Ready", running: "Running", approval: "Awaiting approval", complete: "Complete",
-    idle: "Choose a task and start the simulation.", permission: "Awaiting user authorization (simulated).",
-    granted: "Authorization granted in the simulation.", done: "Simulation complete. No real action was performed."
+    ready:"Ready", working:"Running", approval:"Human review", complete:"Complete", idle:"Run the scenario to observe the actions.", review:"Control handed to the user. Review the result before continuing.", approved:"User confirmed the review. The agent resumes the workflow.", finished:"Outcome verified. Simulation complete.", pending:"Not executed", saved:"Verified", action:"Simulated action", noChange:"No real change.", browser:"Messages / example", files:"Explorer / reports", desktop:"Inventory / record", to:"Recipient", message:"Message", draft:"Draft", sent:"Message sent · simulated", empty:"Waiting for input", record:"Record", stock:"Quantity", newValue:"New quantity", verified:"Outcome confirmed", example:"Fictional environment"
   };
   const scenarios = pt ? {
-    browser: { description: "Consultar uma página pública e organizar os dados em um resumo.", steps: ["Interpretar a solicitação e selecionar uma ferramenta.", "Preparar uma ação de navegação via MCP.", "Simular a leitura da página e extrair informações.", "Conferir e apresentar o resumo ao usuário."] },
-    files: { description: "Organizar arquivos de uma pasta de exemplo, sem tocar nos seus arquivos.", steps: ["Identificar a pasta e os critérios de organização.", "Preparar um plano de movimentação de arquivos.", "Simular a organização dos arquivos de exemplo.", "Verificar o resultado e apresentar o relatório."] },
-    desktop: { description: "Preencher um formulário em um aplicativo fictício, mesmo sem API própria.", steps: ["Identificar o aplicativo e os campos necessários.", "Preparar a interação de mouse e teclado.", "Simular o preenchimento dos campos do aplicativo.", "Verificar o preenchimento e apresentar o resultado."] }
+    browser:{request:"Prepare uma mensagem para Marina no portal de contatos. Mostre o rascunho antes de enviar.",address:"portal.example / conversas / marina",steps:["Localizar a aba do portal e ler o formulário da conversa.","Preencher o rascunho e conferir o texto no campo.","Retomar a mesma conversa após a aprovação e acionar o envio.","Ler a conversa novamente e confirmar que a mensagem apareceu."]},
+    files:{request:"Leia vendas.csv e crie um relatório semanal com o total de três pedidos. Revise o resultado antes de salvar.",address:"Projetos / Relatórios / Semana 47",steps:["Localizar a pasta de exemplo e ler os três registros de vendas.csv.","Calcular o total de R$ 320 e preparar resumo-semanal.txt.","Salvar o relatório de exemplo após a revisão.","Ler o arquivo criado e confirmar seu total e nome."]},
+    desktop:{request:"No aplicativo de estoque, altere a quantidade do item CAB-01 de 12 para 18. Revise antes de salvar.",address:"Windows / Estoque / CAB-01",steps:["Identificar a janela do estoque e o campo de quantidade.","Simular mouse e teclado para preencher 18 e conferir o valor.","Salvar o cadastro após a confirmação do usuário.","Reexaminar o item e verificar que a quantidade exibida é 18."]}
   } : {
-    browser: { description: "Read a public web page and organize its information into a summary.", steps: ["Interpret the request and select a tool.", "Prepare a browser action via MCP.", "Simulate reading the page and extracting information.", "Verify and present the summary to the user."] },
-    files: { description: "Organize files in an example folder without touching your actual files.", steps: ["Identify the folder and organization criteria.", "Prepare a file movement plan.", "Simulate organizing the example files.", "Verify the result and present the report."] },
-    desktop: { description: "Complete a form in a fictional application, even without a dedicated API.", steps: ["Identify the application and required fields.", "Prepare mouse and keyboard interactions.", "Simulate filling in the application fields.", "Verify the entries and present the result."] }
+    browser:{request:"Prepare a message to Marina in the contacts portal. Show the draft before sending it.",address:"portal.example / conversations / marina",steps:["Locate the portal tab and read the conversation form.","Fill the draft and verify the text in the field.","Resume the same conversation after approval and trigger send.","Read the conversation again and confirm that the message appeared."]},
+    files:{request:"Read sales.csv and create a weekly report totaling three orders. Review the result before saving.",address:"Projects / Reports / Week 47",steps:["Locate the example folder and read three records in sales.csv.","Calculate the R$ 320 total and prepare weekly-summary.txt.","Save the example report after review.","Read the created file and confirm its total and filename."]},
+    desktop:{request:"In the inventory application, update item CAB-01 from 12 to 18 units. Review before saving.",address:"Windows / Inventory / CAB-01",steps:["Identify the inventory window and quantity field.","Simulate mouse and keyboard input to enter 18, then verify the value.","Save the record after user confirmation.","Inspect the item again and verify that the displayed quantity is 18."]}
   };
-  const select = demo.querySelector(".demo-select");
-  const run = demo.querySelector("[data-action='run']");
-  const approve = demo.querySelector("[data-action='approve']");
-  const reset = demo.querySelector("[data-action='reset']");
-  const description = demo.querySelector(".demo-scenario");
-  const status = demo.querySelector(".demo-status");
-  const log = demo.querySelector(".demo-log");
-  const meter = demo.querySelector(".demo-meter span");
-  const feature = demo.closest(".feature");
-  let timer = 0, phase = "ready", cursor = 0, activeScenario = null;
-  function append(message, state) {
-    const li = document.createElement("li");
-    li.className = state;
-    li.textContent = message;
-    log.append(li);
-    log.scrollTop = log.scrollHeight;
-  }
-  function state(next) {
-    phase = next;
-    feature.dataset.phase = next;
-    status.textContent = labels[next === "working" ? "running" : next];
-    const busy = next === "working" || next === "approval";
-    select.disabled = busy;
-    run.disabled = busy;
-    approve.hidden = next !== "approval";
-    reset.disabled = next === "ready";
-  }
-  function clearTimer() { if (timer) window.clearTimeout(timer); timer = 0; }
-  function setProgress(value) { meter.style.width = value + "%"; }
-  function resetDemo() {
-    clearTimer();
-    cursor = 0;
-    activeScenario = null;
-    log.replaceChildren();
-    append(labels.idle, "");
-    description.textContent = scenarios[select.value].description;
-    setProgress(0);
-    state("ready");
-  }
-  function nextStep() {
-    if (phase !== "working" || !activeScenario) return;
-    if (cursor >= activeScenario.steps.length) {
-      append(labels.done, "done");
-      setProgress(100);
-      state("complete");
-      return;
+  const tabs=[...demo.querySelectorAll(".scenario-tab")],run=demo.querySelector("[data-action='run']"),approve=demo.querySelector("[data-action='approve']"),reset=demo.querySelector("[data-action='reset']"),description=demo.querySelector(".demo-scenario"),status=demo.querySelector(".demo-status"),log=demo.querySelector(".demo-log"),meter=demo.querySelector(".demo-meter"),bar=meter.querySelector("span"),title=demo.querySelector(".mock-title"),address=demo.querySelector(".mock-address"),body=demo.querySelector(".mock-body"),footer=demo.querySelector(".mock-footer"),feature=demo.closest(".feature");
+  let key="browser",phase="ready",cursor=0,timer=0;
+  const make=(tag,cls,value)=>{const el=document.createElement(tag);if(cls)el.className=cls;if(value!==undefined)el.textContent=value;return el;};
+  function field(label,value,changed=false,multiline=false){body.append(make("span","mock-label",label),make("div","mock-field"+(changed?" changed":"")+(multiline?" message":""),value));}
+  function row(a,b,highlight=false){const r=make("div","mock-row"+(highlight?" highlight":""));r.append(make("strong","",a),make("span","",b));body.append(r);}
+  function showWorkspace(){
+    const edited=cursor>=2,submitted=cursor>=3,verified=cursor>=4;
+    title.textContent=T[key];address.textContent=scenarios[key].address;body.replaceChildren();
+    if(key==="browser"){
+      body.append(make("h5","mock-app-title",pt?"Nova mensagem":"New message"));field(T.to,"Marina Costa");
+      field(T.message,edited?(pt?"Olá, Marina! O relatório semanal está pronto para revisão.":"Hi, Marina! The weekly report is ready for review."):T.empty,edited&&!submitted,true);
+      row(pt?"Estado":"Status",submitted?T.sent:edited?T.draft:T.pending,submitted);
+    }else if(key==="files"){
+      body.append(make("h5","mock-app-title",pt?"Arquivos de exemplo":"Example files"));row(pt?"vendas.csv":"sales.csv","3 × "+(pt?"pedidos":"orders"),cursor>=1);
+      if(cursor>=1){row("1042","R$ 120");row("1043","R$ 80");row("1044","R$ 120");}
+      if(edited)field(pt?"Relatório semanal":"Weekly report",pt?"Pedidos: 3 • Total: R$ 320":"Orders: 3 • Total: R$ 320",!submitted);
+      if(submitted)row(pt?"resumo-semanal.txt":"weekly-summary.txt",verified?T.saved:T.action,true);
+    }else{
+      body.append(make("h5","mock-app-title",pt?"Cadastro de estoque":"Inventory record"));field(T.record,"CAB-01 · USB-C");field(T.stock,submitted?"18":"12",submitted);
+      if(edited&&!submitted)field(T.newValue,"18",true);row(pt?"Situação":"Status",verified?T.verified:edited&&!submitted?T.draft:T.pending,verified);
     }
-    append(activeScenario.steps[cursor], "done");
-    cursor++;
-    setProgress(cursor * 22);
-    if (cursor === 2) {
-      append(labels.permission, "waiting");
-      state("approval");
-      return;
-    }
-    timer = window.setTimeout(nextStep, reduced.matches ? 20 : 690);
+    footer.dataset.state=phase;footer.textContent=phase==="approval"?T.review:phase==="complete"?T.finished:T.example+" · "+T.noChange;
   }
-  run.addEventListener("click", () => {
-    if (phase === "working" || phase === "approval") return;
-    clearTimer();
-    log.replaceChildren();
-    activeScenario = scenarios[select.value];
-    cursor = 0;
-    setProgress(0);
-    state("working");
-    timer = window.setTimeout(nextStep, reduced.matches ? 20 : 330);
-  });
-  approve.addEventListener("click", () => {
-    if (phase !== "approval") return;
-    append(labels.granted, "done");
-    state("working");
-    timer = window.setTimeout(nextStep, reduced.matches ? 20 : 350);
-  });
-  reset.addEventListener("click", resetDemo);
-  select.addEventListener("change", resetDemo);
-  resetDemo();
-  demo.hidden = false;
+  function appendLog(message,state){log.append(make("li",state,message));log.scrollTop=log.scrollHeight;}
+  function setDemoProgress(v){meter.setAttribute("aria-valuenow",String(v));bar.style.width=v+"%";}
+  function setState(next){phase=next;feature.dataset.phase=next;status.textContent=T[next];const busy=next==="working"||next==="approval";tabs.forEach(tab=>{tab.disabled=busy;tab.setAttribute("aria-pressed",String(tab.dataset.scenario===key));});run.disabled=busy;approve.hidden=next!=="approval";reset.disabled=next==="ready";showWorkspace();}
+  function clearTimer(){if(timer)window.clearTimeout(timer);timer=0;}
+  function resetDemo(){clearTimer();cursor=0;log.replaceChildren();appendLog(T.idle,"");description.textContent=scenarios[key].request;setDemoProgress(0);setState("ready");}
+  function nextStep(){if(phase!=="working")return;if(cursor>=4){appendLog(T.finished,"done");setDemoProgress(100);setState("complete");return;}appendLog(scenarios[key].steps[cursor],"done");cursor++;setDemoProgress(cursor*23);showWorkspace();if(cursor===2){appendLog(T.review,"waiting");setState("approval");return;}timer=window.setTimeout(nextStep,reduced.matches?30:1000);}
+  tabs.forEach(tab=>tab.addEventListener("click",()=>{if(phase==="working"||phase==="approval")return;key=tab.dataset.scenario;resetDemo();}));
+  run.addEventListener("click",()=>{if(phase==="working"||phase==="approval")return;clearTimer();cursor=0;log.replaceChildren();setDemoProgress(0);setState("working");timer=window.setTimeout(nextStep,reduced.matches?30:420);});
+  approve.addEventListener("click",()=>{if(phase!=="approval")return;appendLog(T.approved,"done");setState("working");timer=window.setTimeout(nextStep,reduced.matches?30:420);});
+  reset.addEventListener("click",resetDemo);resetDemo();demo.hidden=false;
 })();
