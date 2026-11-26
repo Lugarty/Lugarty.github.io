@@ -152,3 +152,17 @@ body{background:radial-gradient(ellipse 55rem 40rem at 92% 7rem,#1e3a654a,transp
 @media(max-width:900px){.wrap{width:min(100% - 42px,1180px)}.hero{grid-template-columns:1fr;min-height:0;gap:35px;padding:63px 0}.hero-system{max-width:550px;width:100%;justify-self:start}.feature{grid-template-columns:1fr}.mission-grid{grid-template-columns:1fr}.section{padding:59px 0}}
 @media(max-width:520px){.wrap{width:calc(100% - 32px)}.hero{padding:48px 0 55px}.hero h1{font-size:43px}.hero-name{margin-top:22px}.hero-system .system-content{padding:18px 12px}.system-bottom{font-size:10px}.system-footer{padding:11px 13px}.scenario-tabs{grid-template-columns:1fr}.scenario-tab{min-height:42px}.mission-demo{padding:13px}.mock-body{min-height:205px}.mission-trace .demo-log{min-height:140px}.project{padding:0 20px 20px}.project .project-visual{height:68px;margin:0 -20px 10px;padding:12px 20px;gap:10px}.project-emblem{width:38px;height:38px}.project-emblem svg{width:21px;height:21px}.project-code{font-size:10px}.feature{padding:17px}.section{padding:48px 0}.system-endpoints{gap:6px}}
 @media(prefers-reduced-motion:reduce){.system-line i{animation:none}.mock-field.changed{animation:none}}
+
+/* Technology inventory: current practice and previous experience. */
+#technologies .technology-tier{margin-top:28px}
+#technologies .technology-tier+.technology-tier{margin-top:38px;padding-top:32px;border-top:1px solid var(--line)}
+#technologies .technology-tier>h3{font-size:clamp(20px,2.5vw,25px);margin-bottom:8px}
+#technologies .technology-tier>p{max-width:760px;font-size:14px;margin-bottom:20px}
+#technologies .technology-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#technologies .technology-group{min-width:0;padding:17px 18px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(145deg,#192d4640,#142238);align-self:stretch}
+#technologies .technology-group h4{margin:0 0 12px;font-size:13px;font-weight:650;color:var(--accent-text);letter-spacing:.015em}
+#technologies .technology-group .skills{margin-top:0}
+#technologies .technology-group .skills span{max-width:100%;overflow-wrap:anywhere;line-height:1.45}
+#technologies .technology-tier--previous .technology-group{background:#121e2e}
+#technologies .technology-tier--previous .technology-group h4{color:var(--muted)}
+@media(max-width:700px){#technologies .technology-groups{grid-template-columns:1fr}#technologies .technology-group{padding:14px}}

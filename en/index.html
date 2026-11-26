@@ -14,7 +14,7 @@
 <link rel="alternate" hreflang="en" href="https://lugarty.github.io/en/">
 <link rel="alternate" hreflang="x-default" href="https://lugarty.github.io/">
 <link rel="icon" type="image/svg+xml" href="../assets/icon.svg?v=5">
-<link rel="stylesheet" href="../assets/style.css?v=8">
+<link rel="stylesheet" href="../assets/style.css?v=9">
 <script defer src="../assets/site.js?v=10"></script>
 </head>
 <body>
@@ -34,7 +34,89 @@
 <div class="feature"><div><span class="tag">Independent project · In development</span><h3>Insigni Ordis <small style="font-size:.45em;color:var(--accent)">IO</small></h3><p>IO is an MCP (Model Context Protocol) server that connects AI agents to the user's computer. Through a compatible client, an agent can interact with Windows applications, files, mouse, keyboard and browser.</p><p>The project explores automation across different tools, including those without dedicated APIs. Permissions and human oversight mechanisms help keep execution under control.</p><p style="font-size:13px">The source code is not public. This overview describes only the project's concept and general capabilities.</p></div>
 <div class="diagram" aria-label="Conceptual overview · Not an internal architecture diagram"><div class="node">AI agent</div><div class="arrow" aria-hidden="true">↕</div><div class="node active">Insigni Ordis · MCP</div><div class="arrow" aria-hidden="true">↕</div><div class="node">User's computer<br><span style="color:var(--muted);font-size:12px">Applications · Files · Browser</span></div><div class="diagram-caption">Conceptual overview · Not an internal architecture diagram</div></div><div class="demo mission-demo" hidden><div class="demo-heading"><div><h4>IO in action</h4><p>From request to verified outcome.</p></div><span class="demo-label">LOCAL SIMULATION</span></div><p class="demo-intro">Choose a task. These examples recreate IO capabilities used by an external agent, with fictional data. No real computer, application or account is accessed.</p><div class="scenario-tabs" role="group" aria-label="USER REQUEST"><button type="button" class="scenario-tab" data-scenario="browser" aria-pressed="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M6 6.5h.1m3 0h.1M8 14h8m-8 3h5"/></svg><span>Send a draft</span></button><button type="button" class="scenario-tab" data-scenario="background" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M12 17v4m-5 0h10"/><rect x="9" y="8" width="6" height="5" rx="1"/><path d="M10.5 8V7a1.5 1.5 0 0 1 3 0v1"/></svg><span>Background desktop</span></button><button type="button" class="scenario-tab" data-scenario="foreground" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M12 17v4m-5 0h10M8 7l1 7 2-2 3 2 1-1-3-3 3-1z"/></svg><span>Foreground desktop</span></button></div><div class="mission-request"><span>USER REQUEST</span><p class="demo-scenario"></p></div><div class="mission-grid"><div class="mock-workspace"><div class="mock-top"><div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div><span class="mock-title">Simulated workspace</span></div><div class="mock-address"></div><div class="mock-body"></div><div class="mock-footer" aria-live="polite"></div></div><div class="mission-trace"><div class="demo-screen-top"><span class="demo-lamp" aria-hidden="true"></span><span>Agent execution</span><span class="demo-status" role="status">Ready</span></div><ol class="demo-log" aria-live="polite" aria-relevant="additions text"><li>Run the scenario to follow the actions.</li></ol><div class="demo-meter" role="progressbar" aria-label="Simulation progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div><div class="demo-actions"><button class="demo-button" type="button" data-action="run">Run scenario</button><button class="demo-button approval-button" type="button" data-action="approve" hidden>Approve and continue</button><button class="demo-button secondary" type="button" data-action="reset" disabled>Reset</button></div></div></div></div></div></section>
 <section class="section"><div class="section-head"><span class="index">04</span><h2>Other projects</h2></div><div class="projects"><article class="project project-backend"><div class="project-visual" aria-hidden="true"><div class="project-emblem"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6.5h.1m3 0h7M7 17.5h.1m3 0h7"/></svg></div><span class="project-code">01 / BACKEND</span><div class="project-signal"><i></i><i></i><i></i><i></i><i></i></div></div><span class="tag">Backend · Academic</span><h3>Clinical management system</h3><p>Medication, inventory and medical request microservices, with local validation and automated tests.</p><div class="stack">Java · Spring Boot · PostgreSQL · Eureka</div><a href="https://github.com/Lugarty/medicamentos-service">Inventory ↗</a><a href="https://github.com/Lugarty/solicitacoes-service">Requests ↗</a></article><article class="project project-mobile"><div class="project-visual" aria-hidden="true"><div class="project-emblem"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 18h4M8 7l3 3 4-4"/></svg></div><span class="project-code">02 / MOBILE</span><div class="project-signal"><i></i><i></i><i></i><i></i><i></i></div></div><span class="tag">Mobile · Academic</span><h3>Android Trail Tracker</h3><p>An application for recording GPS trails, storing routes locally and displaying them on a map.</p><div class="stack">Java · Android SDK · SQLite · Google Maps</div><a href="https://github.com/Lugarty/android-trail-tracker">View repository ↗</a></article><article class="project project-desktop"><div class="project-visual" aria-hidden="true"><div class="project-emblem"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M12 17v4m-5 0h10M7 8h4m-4 3h7"/></svg></div><span class="project-code">03 / DESKTOP</span><div class="project-signal"><i></i><i></i><i></i><i></i><i></i></div></div><span class="tag">Desktop · Independent</span><h3>Win11 Debloater & Optimizer</h3><p>A Windows 11 maintenance and configuration utility with task execution, logs and confirmations for higher-impact operations.</p><div class="stack">C# · .NET 8 · WinForms · PowerShell</div><a href="https://github.com/Lugarty/Win11-Debloater-Optimizer">View repository ↗</a></article><article class="project project-network"><div class="project-visual" aria-hidden="true"><div class="project-emblem"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><path d="M12 8v4H5v4m7-4h7v4"/></svg></div><span class="project-code">04 / NETWORK</span><div class="project-signal"><i></i><i></i><i></i><i></i><i></i></div></div><span class="tag">Distributed · Academic</span><h3>Distributed Hangman RMI</h3><p>A networked cooperative game with a shared-state server, desktop clients and integration tests.</p><div class="stack">Java · RMI · Swing</div><a href="https://github.com/Lugarty/hangman-rmi-game">View repository ↗</a></article></div></section>
-<section class="section"><div class="section-head"><span class="index">05</span><h2>Technologies</h2></div><p>Tools I've used in projects and coursework.</p><div class="skills"><span>Java</span><span>C#</span><span>Python</span><span>JavaScript</span><span>TypeScript</span><span>SQL</span><span>PowerShell</span><span>Spring Boot</span><span>.NET</span><span>Next.js</span><span>PostgreSQL</span><span>MySQL</span><span>SQLite</span><span>Docker</span><span>Git</span><span>GitHub Actions</span><span>MCP</span></div></section>
+<section class="section" id="technologies">
+  <div class="section-head"><span class="index">05</span><h2>Technologies</h2></div>
+  <div class="technology-tier technology-tier--current" aria-labelledby="technologies-current">
+    <h3 id="technologies-current">Currently use</h3>
+    <p>Technologies, tools and practices I currently use in software development, automation and engineering.</p>
+    <div class="technology-groups">
+      <div class="technology-group">
+        <h4>Languages and formats</h4>
+        <div class="skills"><span>Java</span><span>C#</span><span>Python</span><span>JavaScript</span><span>PowerShell</span><span>HTML5</span><span>CSS3</span><span>XAML</span><span>XML</span><span>JSON</span><span>Markdown</span><span>SVG</span></div>
+      </div>
+      <div class="technology-group">
+        <h4>Backend and APIs</h4>
+        <div class="skills"><span>Spring Boot</span><span>Spring MVC</span><span>Spring Security</span><span>Java RMI</span><span>HTTP/HTTPS</span><span>HTTP Basic</span></div>
+      </div>
+      <div class="technology-group">
+        <h4>Frontend</h4>
+        <div class="skills"><span>Responsive design</span></div>
+      </div>
+      <div class="technology-group">
+        <h4>Desktop and Windows</h4>
+        <div class="skills"><span>.NET / .NET Core</span><span>Windows Forms (WinForms)</span><span>WPF</span><span>Win32 API</span><span>Windows UI Automation (UIA)</span><span>Windows Registry</span><span>Windows Services</span><span>UAC</span></div>
+      </div>
+      <div class="technology-group">
+        <h4>Artificial intelligence and automation</h4>
+        <div class="skills"><span>Model Context Protocol (MCP)</span><span>AI agents</span><span>Playwright</span><span>Microsoft Edge / Chromium</span><span>Chrome DevTools Protocol (CDP)</span><span>Pywinauto</span><span>PyWin32</span><span>Comtypes</span><span>ctypes</span><span>Psutil</span><span>Pillow</span></div>
+      </div>
+      <div class="technology-group">
+        <h4>Testing and quality</h4>
+        <div class="skills"><span>Integration testing</span><span>Regression testing</span><span>Smoke tests</span><span>QA/QC</span><span>Debugging</span></div>
+      </div>
+      <div class="technology-group">
+        <h4>DevOps and development tools</h4>
+        <div class="skills"><span>Git</span><span>GitHub</span><span>GitHub Actions</span><span>GitHub Pages</span><span>CI/CD</span><span>NuGet</span><span>.NET CLI</span></div>
+      </div>
+      <div class="technology-group">
+        <h4>Architecture and software engineering</h4>
+        <div class="skills"><span>Microservices</span><span>Distributed systems</span><span>SOLID</span><span>Object-oriented programming</span><span>Design patterns</span><span>CRUD</span><span>Systems integration</span><span>Process automation</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="technology-tier technology-tier--previous" aria-labelledby="technologies-previous">
+    <h3 id="technologies-previous">Previously used in projects or studies</h3>
+    <p>Technologies, tools and practices I have used in previous projects or studies but do not use regularly today. Some may require a refresher.</p>
+    <div class="technology-groups">
+      <div class="technology-group">
+        <h4>Languages and formats</h4>
+        <div class="skills"><span>TypeScript</span><span>SQL</span><span>YAML</span></div>
+      </div>
+      <div class="technology-group">
+        <h4>Backend and APIs</h4>
+        <div class="skills"><span>Spring Data JPA</span><span>Spring Cloud</span><span>Spring Boot Actuator</span><span>Bean Validation</span><span>Hibernate</span><span>Lombok</span><span>Netflix Eureka</span><span>REST APIs</span></div>
+      </div>
+      <div class="technology-group">
+        <h4>Frontend</h4>
+        <div class="skills"><span>Next.js</span><span>DOM API</span></div>
+      </div>
+      <div class="technology-group">
+        <h4>Desktop and Windows</h4>
+        <div class="skills"><span>Java Swing</span><span>COM</span><span>Windows Task Scheduler</span><span>AppX / MSIX</span><span>DISM</span><span>SFC</span><span>powercfg</span></div>
+      </div>
+      <div class="technology-group">
+        <h4>Mobile development</h4>
+        <div class="skills"><span>Android SDK</span><span>Android Studio</span><span>AndroidX</span><span>Android Views</span><span>Material Components</span><span>Google Maps SDK</span><span>Fused Location Provider</span><span>Google Play Services</span><span>RecyclerView</span><span>ConstraintLayout</span></div>
+      </div>
+      <div class="technology-group">
+        <h4>Databases</h4>
+        <div class="skills"><span>PostgreSQL</span><span>MySQL</span><span>SQLite</span><span>H2</span></div>
+      </div>
+      <div class="technology-group">
+        <h4>Testing and quality</h4>
+        <div class="skills"><span>JUnit</span><span>Mockito</span><span>Jest</span><span>Mocha</span><span>Espresso</span><span>Spring Boot Test</span><span>SonarQube</span><span>ESLint</span><span>Stylelint</span><span>HTMLHint</span></div>
+      </div>
+      <div class="technology-group">
+        <h4>DevOps and development tools</h4>
+        <div class="skills"><span>Docker</span><span>Maven</span><span>Gradle</span><span>Gradle Kotlin DSL</span><span>Node.js</span><span>npm</span><span>MSBuild</span><span>JDK</span><span>jpackage</span><span>Visual Studio Code</span><span>Live Server</span></div>
+      </div>
+      <div class="technology-group">
+        <h4>Architecture and software engineering</h4>
+        <div class="skills"><span>Data structures</span><span>Scrum</span><span>Asynchronous programming</span><span>Data modeling</span></div>
+      </div>
+    </div>
+  </div>
+</section>
 <section class="section contact" id="contact"><div><div class="section-head"><span class="index">06</span><h2>Let's connect</h2></div><p>Explore my public projects on GitHub and get in touch through LinkedIn.</p></div><div class="actions"><a class="button primary" href="https://www.linkedin.com/in/an%C3%ADsio-oliveira-albuquerque-filho-a01568292/">LinkedIn ↗</a><a class="button" href="https://github.com/Lugarty">GitHub ↗</a></div></section>
 </main><footer class="wrap site-footer"><span>© 2026 Anísio Oliveira</span><span>Salvador, Bahia · Brazil</span></footer>
 </body>
