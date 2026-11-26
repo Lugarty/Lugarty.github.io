@@ -52,17 +52,17 @@
   if (!demo) return;
   const pt = document.documentElement.lang.toLowerCase().startsWith("pt");
   const T = pt ? {
-    ready:"Pronto", working:"Executando", approval:"Revisão humana", complete:"Concluído", idle:"Inicie o cenário para acompanhar as ações.", review:"Controle entregue ao usuário. Confira o resultado antes de continuar.", approved:"Usuário confirmou a revisão. O agente retoma o fluxo.", finished:"Resultado conferido. Simulação concluída.", pending:"Não executado", saved:"Verificado", action:"Ação simulada", noChange:"Nenhuma alteração real.", browser:"Mensagens / exemplo", files:"Explorador / relatórios", desktop:"Estoque / cadastro", to:"Destinatário", message:"Mensagem", draft:"Rascunho", sent:"Mensagem enviada · simulada", empty:"Aguardando preenchimento", record:"Registro", stock:"Quantidade", newValue:"Nova quantidade", verified:"Resultado confirmado", example:"Ambiente fictício"
+    ready:"Pronto", working:"Executando", approval:"Revisão humana", complete:"Concluído", idle:"Inicie o cenário para acompanhar as ações.", review:"Controle entregue ao usuário. Confira o resultado antes de continuar.", approved:"Usuário confirmou a revisão. O agente retoma o fluxo.", finished:"Resultado conferido. Simulação concluída.", pending:"Não executado", saved:"Verificado", action:"Ação simulada", noChange:"Nenhuma alteração real.", browser:"Mensagens / exemplo", files:"Explorador de Arquivos · Windows", desktop:"Estoque / cadastro", to:"Destinatário", message:"Mensagem", draft:"Rascunho", sent:"Mensagem enviada · simulada", empty:"Aguardando preenchimento", record:"Registro", stock:"Quantidade", newValue:"Nova quantidade", verified:"Resultado confirmado", example:"Ambiente fictício"
   } : {
-    ready:"Ready", working:"Running", approval:"Human review", complete:"Complete", idle:"Run the scenario to observe the actions.", review:"Control handed to the user. Review the result before continuing.", approved:"User confirmed the review. The agent resumes the workflow.", finished:"Outcome verified. Simulation complete.", pending:"Not executed", saved:"Verified", action:"Simulated action", noChange:"No real change.", browser:"Messages / example", files:"Explorer / reports", desktop:"Inventory / record", to:"Recipient", message:"Message", draft:"Draft", sent:"Message sent · simulated", empty:"Waiting for input", record:"Record", stock:"Quantity", newValue:"New quantity", verified:"Outcome confirmed", example:"Fictional environment"
+    ready:"Ready", working:"Running", approval:"Human review", complete:"Complete", idle:"Run the scenario to observe the actions.", review:"Control handed to the user. Review the result before continuing.", approved:"User confirmed the review. The agent resumes the workflow.", finished:"Outcome verified. Simulation complete.", pending:"Not executed", saved:"Verified", action:"Simulated action", noChange:"No real change.", browser:"Messages / example", files:"File Explorer · Windows", desktop:"Inventory / record", to:"Recipient", message:"Message", draft:"Draft", sent:"Message sent · simulated", empty:"Waiting for input", record:"Record", stock:"Quantity", newValue:"New quantity", verified:"Outcome confirmed", example:"Fictional environment"
   };
   const scenarios = pt ? {
     browser:{request:"Prepare uma mensagem para Marina no portal de contatos. Mostre o rascunho antes de enviar.",address:"portal.example / conversas / marina",steps:["Localizar a aba do portal e ler o formulário da conversa.","Preencher o rascunho e conferir o texto no campo.","Retomar a mesma conversa após a aprovação e acionar o envio.","Ler a conversa novamente e confirmar que a mensagem apareceu."]},
-    files:{request:"Leia vendas.csv e crie um relatório semanal com o total de três pedidos. Revise o resultado antes de salvar.",address:"Projetos / Relatórios / Semana 47",steps:["Localizar a pasta de exemplo e ler os três registros de vendas.csv.","Calcular o total de R$ 320 e preparar resumo-semanal.txt.","Salvar o relatório de exemplo após a revisão.","Ler o arquivo criado e confirmar seu total e nome."]},
+    files:{requiresReview:false,request:"Organize minha pasta Downloads no Windows. Separe os arquivos em Documentos, Imagens e Compactados, sem excluir nada.",address:"C:\\Users\\Usuario\\Downloads",steps:["Listar os arquivos da pasta Downloads e identificar seus tipos.","Criar as subpastas Documentos, Imagens e Compactados.","Mover cada arquivo para sua subpasta, preservando nomes e conteúdo.","Conferir os destinos e confirmar que os três arquivos foram preservados."]},
     desktop:{requiresReview:false,request:"No aplicativo de estoque, altere a quantidade do item CAB-01 de 12 para 18. (Como o usuário não solicitou uma revisão prévia neste cenário, o agente entende que pode executar a tarefa diretamente, sem apresentar o cadastro para aprovação.)",address:"Windows / Estoque / CAB-01",steps:["Identificar a janela do estoque e o campo de quantidade.","Simular mouse e teclado para preencher 18 e conferir o valor.","Salvar o cadastro diretamente, sem solicitar revisão prévia.","Reexaminar o item e verificar que a quantidade exibida é 18."]}
   } : {
     browser:{request:"Prepare a message to Marina in the contacts portal. Show the draft before sending it.",address:"portal.example / conversations / marina",steps:["Locate the portal tab and read the conversation form.","Fill the draft and verify the text in the field.","Resume the same conversation after approval and trigger send.","Read the conversation again and confirm that the message appeared."]},
-    files:{request:"Read sales.csv and create a weekly report totaling three orders. Review the result before saving.",address:"Projects / Reports / Week 47",steps:["Locate the example folder and read three records in sales.csv.","Calculate the R$ 320 total and prepare weekly-summary.txt.","Save the example report after review.","Read the created file and confirm its total and filename."]},
+    files:{requiresReview:false,request:"Organize my Downloads folder on Windows. Sort files into Documents, Images and Archives without deleting anything.",address:"C:\\Users\\User\\Downloads",steps:["List the files in Downloads and identify their types.","Create the Documents, Images and Archives subfolders.","Move each file into its subfolder, preserving its name and contents.","Check each destination and confirm that all three files were preserved."]},
     desktop:{requiresReview:false,request:"In the inventory application, update item CAB-01 from 12 to 18 units. (Since the user did not request a prior review in this scenario, the agent understands it can carry out the task directly, without presenting the record for approval.)",address:"Windows / Inventory / CAB-01",steps:["Identify the inventory window and quantity field.","Simulate mouse and keyboard input to enter 18, then verify the value.","Save the record directly, without requesting a prior review.","Inspect the item again and verify that the displayed quantity is 18."]}
   };
   const tabs=[...demo.querySelectorAll(".scenario-tab")],run=demo.querySelector("[data-action='run']"),approve=demo.querySelector("[data-action='approve']"),reset=demo.querySelector("[data-action='reset']"),description=demo.querySelector(".demo-scenario"),status=demo.querySelector(".demo-status"),log=demo.querySelector(".demo-log"),meter=demo.querySelector(".demo-meter"),bar=meter.querySelector("span"),title=demo.querySelector(".mock-title"),address=demo.querySelector(".mock-address"),body=demo.querySelector(".mock-body"),footer=demo.querySelector(".mock-footer"),feature=demo.closest(".feature");
@@ -78,10 +78,23 @@
       field(T.message,edited?(pt?"Olá, Marina! O relatório semanal está pronto para revisão.":"Hi, Marina! The weekly report is ready for review."):T.empty,edited&&!submitted,true);
       row(pt?"Estado":"Status",submitted?T.sent:edited?T.draft:T.pending,submitted);
     }else if(key==="files"){
-      body.append(make("h5","mock-app-title",pt?"Arquivos de exemplo":"Example files"));row(pt?"vendas.csv":"sales.csv","3 × "+(pt?"pedidos":"orders"),cursor>=1);
-      if(cursor>=1){row("1042","R$ 120");row("1043","R$ 80");row("1044","R$ 120");}
-      if(edited)field(pt?"Relatório semanal":"Weekly report",pt?"Pedidos: 3 • Total: R$ 320":"Orders: 3 • Total: R$ 320",!submitted);
-      if(submitted)row(pt?"resumo-semanal.txt":"weekly-summary.txt",verified?T.saved:T.action,true);
+      const items=[
+        {name:pt?"contrato.pdf":"contract.pdf",type:"PDF",folder:pt?"Documentos":"Documents"},
+        {name:pt?"captura.png":"screenshot.png",type:"PNG",folder:pt?"Imagens":"Images"},
+        {name:pt?"projeto.zip":"project.zip",type:"ZIP",folder:pt?"Compactados":"Archives"}
+      ];
+      body.append(make("h5","mock-app-title","Downloads"));
+      if(!submitted){
+        items.forEach(item=>row(item.name,cursor>=1?item.type:(pt?"Arquivo":"File"),cursor>=1&&!edited));
+        if(edited){
+          body.append(make("span","mock-label",pt?"Subpastas criadas":"Subfolders created"));
+          items.forEach(item=>row("▸ "+item.folder,pt?"Vazia":"Empty",true));
+        }
+      }else{
+        body.append(make("span","mock-label",pt?"Arquivos nos novos destinos":"Files in their new locations"));
+        items.forEach(item=>row("▸ "+item.folder+"/"+item.name,verified?T.saved:T.action,true));
+        if(verified)row(pt?"3 arquivos preservados":"3 files preserved",pt?"0 excluídos":"0 deleted",true);
+      }
     }else{
       body.append(make("h5","mock-app-title",pt?"Cadastro de estoque":"Inventory record"));field(T.record,"CAB-01 · USB-C");field(T.stock,submitted?"18":"12",submitted);
       if(edited&&!submitted)field(T.newValue,"18",true);row(pt?"Situação":"Status",verified?T.verified:submitted?T.action:edited?T.draft:T.pending,verified);
