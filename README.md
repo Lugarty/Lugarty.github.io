@@ -20,7 +20,3 @@ The site uses static HTML and CSS, with no build step or external runtime depend
 ## Deployment
 
 GitHub Pages serves the `main` branch from the repository root.
-
-## Scope
-
-This repository contains the portfolio website only. Insigni Ordis is described at a conceptual level; its private source code and internal implementation are not included.
