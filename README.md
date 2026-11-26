@@ -1,6 +1,6 @@
 # Personal Portfolio
 
-Personal website of Anísio Oliveira, a Software Engineering student focused on backend development, automation and applied AI.
+My Personal website
 
 ## Website
 
